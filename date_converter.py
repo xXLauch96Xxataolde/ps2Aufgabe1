@@ -21,17 +21,34 @@ def dateconvert(date):
     year = int(date[0:4])
     month = int(date[4:6])
     day = int(date[6:8])
-    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    weekdays_english = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     weekdays_german = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
-    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    months_english = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    months_german = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
 
     try:
-        weekday = weekdays[dt.date(year, month, day).weekday()]
+        weekday_english = weekdays_english[dt.date(year, month, day).weekday()]
     except ValueError:
         return print("No valid date was given.")
-    month = months[month - 1]
 
-    print(str(weekday) + ",", str(day) + ".", month, year)
+    try:
+        d = dt.datetime(year, month, day, 12, 00)
+    except ValueError:
+        return print("No valid date was given.")
 
 
-dateconvert(20170230)
+
+    unixtime = time.mktime(d.timetuple())
+    unixtime = str(unixtime).split(".")
+    unixtime = unixtime[0]
+
+    print(unixtime)
+
+
+    # german date
+    german_weekday
+
+
+
+dateconvert(20170222)
