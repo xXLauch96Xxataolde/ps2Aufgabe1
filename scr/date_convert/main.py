@@ -30,7 +30,7 @@ def german_month(i):
     month_list = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober",
                      "November", "Dezember"]
     return(month_list[i - 1])
-    print("asasad")
+    
     
 def dateconvert(date):
     german_date = ""
