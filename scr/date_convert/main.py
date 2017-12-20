@@ -5,6 +5,7 @@ Additional information if required and more infos. Complete sentences please.
 
 import re
 from datetime import datetime
+import time
  
 __author__ = "123456: John Cleese, 654321: Terry Gilliam"  # put your data here
 __copyright__ = "Copyright 2017/2018 - EPR-Goethe-Uni" 
@@ -19,14 +20,32 @@ def parser(inp):
     return(tf)
 
 
+def german_day(i):
+    day_list = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sonnabend", "Herrentag"]
+    return(day_list[i - 1])
+
+
+def german_month(i):
+    """Please not, my eclipse has problems with umlauts"""
+    month_list = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober",
+                     "November", "Dezember"]
+    return(month_list[i - 1])
+    print("asasad")
+    
 def dateconvert(date):
     german_date = ""
     british_date = ""
     american_date = ""
     unix_date = 0
-    d = datetime.strptime(date, '%Y%m%d')
-    date_string = d.strftime('%Y%m%d')
-    print(date_string)
+    d = datetime.strptime(date+"12", '%Y%m%d%H')
+    german_date = str(german_day(d.isoweekday())) + ", " + str(d.day) + ". " + str(german_month(d.month)) + " " + str(d.year)
+    british_date = d.strftime("%A, %#d %B %Y")
+    american_date = d.strftime("%A, %d/%m/%Y")
+    unix_date = time.mktime(d.timetuple())
+    print(german_date)
+    print(british_date)
+    print(american_date)
+    print(str(unix_date).split(".")[0])
     return (german_date, british_date, american_date, unix_date)
 
 
@@ -39,13 +58,17 @@ def error():
 
 def main():
     while(True):
+        print("1) Enter american date format")
+        print("2) Enter o.g. funktionsparamter")
         print("Please enter a date")
         inp = input()
+        if (inp == 1):
+            us_parser()
         if (parser(inp) == None):
             error()        
         else:
             dateconvert(inp)
-    
+
 
 if __name__ == '__main__':
     main()
