@@ -20,6 +20,21 @@ def parser(inp):
     return(tf)
 
 
+def us_parser(inp):
+    while(True):
+        try:
+            inp = inp.split("/")
+            month = inp[0]
+            day = inp[1]
+            year = inp[2]
+            date = str(year) + str(month) + str(day)
+            dateconvert(date)
+            break
+        except ValueError:
+            error()
+            break
+
+
 def german_day(i):
     day_list = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sonnabend", "Herrentag"]
     return(day_list[i - 1])
@@ -33,20 +48,27 @@ def german_month(i):
     
     
 def dateconvert(date):
-    german_date = ""
-    british_date = ""
-    american_date = ""
-    unix_date = 0
-    d = datetime.strptime(date+"12", '%Y%m%d%H')
-    german_date = str(german_day(d.isoweekday())) + ", " + str(d.day) + ". " + str(german_month(d.month)) + " " + str(d.year)
-    british_date = d.strftime("%A, %#d %B %Y")
-    american_date = d.strftime("%A, %d/%m/%Y")
-    unix_date = time.mktime(d.timetuple())
-    print(german_date)
-    print(british_date)
-    print(american_date)
-    print(str(unix_date).split(".")[0])
-    return (german_date, british_date, american_date, unix_date)
+    while(True):
+        try:
+            german_date = ""
+            british_date = ""
+            american_date = ""
+            unix_date = 0
+            d = datetime.strptime(date + "12", '%Y%m%d%H')
+            german_date = str(german_day(d.isoweekday())) + ", " + str(d.day) + ". " + str(german_month(d.month)) + " " + str(d.year)
+            british_date = d.strftime("%A, %#d %B %Y")
+            american_date = d.strftime("%A, %d/%m/%Y")
+            unix_date = time.mktime(d.timetuple())
+            print("\n")
+            print(german_date)
+            print(british_date)
+            print(american_date)
+            print(str(unix_date).split(".")[0])
+            return (german_date, british_date, american_date, unix_date)
+            break
+        except ValueError:
+            error()
+            break
 
 
 def error():
@@ -59,16 +81,23 @@ def error():
 def main():
     while(True):
         print("1) Enter american date format")
-        print("2) Enter o.g. funktionsparamter")
-        print("Please enter a date")
+        print("2) Enter o.g. funktionsparamter")        
         inp = input()
-        if (inp == 1):
-            us_parser()
-        if (parser(inp) == None):
-            error()        
+        if (inp == "1"):
+            print("Please enter a date: MM/DD/YYYY")
+            inp = input()
+            us_parser(inp)
+            break
+        elif (inp == "2"):
+            print("Please enter a date: YYYYMMDD")
+            inp = input()
+            if (parser(inp) == None):
+                error()        
+            else:
+                dateconvert(inp)
+                break
         else:
-            dateconvert(inp)
-
+            error()
 
 if __name__ == '__main__':
     main()
