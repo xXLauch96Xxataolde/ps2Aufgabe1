@@ -2,12 +2,6 @@
 
 """
 
-__author__ = "6770541: Niels Heissel"
-__copyright__ = "Copyright 2017/2018 – EPR-Goethe-Uni"
-__credits__ = "If you would like to thank somebody \
-              i.e. an other student for her code or leave it out"
-__email__ = "niels.heissel@stud.uni-frankfurt.de"
-
 import random
 import datetime as dt
 import sys
@@ -15,6 +9,12 @@ import os
 import time
 import math
 
+
+__author__ = "6770541: Niels Heissel"
+__copyright__ = "Copyright 2017/2018 – EPR-Goethe-Uni"
+__credits__ = "If you would like to thank somebody \
+              i.e. an other student for her code or leave it out"
+__email__ = "niels.heissel@stud.uni-frankfurt.de"
 
 
 def dateconvert(date):

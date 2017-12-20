@@ -2,17 +2,16 @@
 
 """
 
-__author__ = "6770541: Niels Heissel"
-__copyright__ = "Copyright 2017/2018 – EPR-Goethe-Uni"
-__credits__ = "If you would like to thank somebody \
-              i.e. an other student for her code or leave it out"
-__email__ = "niels.heissel@stud.uni-frankfurt.de"
-
 import datetime as dt
 import sys
 import os
 import time
 
+__author__ = "6770541: Niels Heissel"
+__copyright__ = "Copyright 2017/2018 – EPR-Goethe-Uni"
+__credits__ = "If you would like to thank somebody \
+              i.e. an other student for her code or leave it out"
+__email__ = "niels.heissel@stud.uni-frankfurt.de"
 
 
 def dateconvert(date):
@@ -22,7 +21,7 @@ def dateconvert(date):
     day = int(date[6:8])
 
     weekdays_english = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    weekdays_german = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sonnabend", "Herrntag"]
+    weekdays_german = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sonnabend", "Herrentag"]
     months_english = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
                       "November", "December"]
     months_german = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober",
@@ -73,10 +72,13 @@ def main():
     date = input("Type your date in your special format.")
 
     if x == "1":
-        date = date[6:] + date[0:2] + date[3:5]
-        dateconvert(date)
+        if len(date) == 10:
+            date = date[6:] + date[0:2] + date[3:5]
+            dateconvert(date)
+        else:
+            print("No valid date was given.")
 
-    elif x == 2:
+    elif x == "2":
         dateconvert(date)
 
 
