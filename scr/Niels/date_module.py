@@ -26,11 +26,11 @@ def dateconvert(date):
         month = int(date[4:6])
         day = int(date[6:8])
     except ValueError:
-        return print("Wrong format.")
+        return "Wrong format."
 
     # check if years are in intervall
     if year not in range(1800, 2201):
-        return print("Date is out of interval.")
+        return "Date is out of interval."
 
     weekdays_english = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     weekdays_german = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sonnabend", "Herrntag"]
@@ -43,13 +43,13 @@ def dateconvert(date):
     try:
         weekday_english = weekdays_english[dt.date(year, month, day).weekday()]
     except ValueError:
-        return print("No valid date was given.")
+        return "No valid date was given."
 
     # check if date is real and turn into datetime format
     try:
         d = dt.datetime(year, month, day, 13, 00)  # 13 because our time-zone is plus 1
     except ValueError:
-        return print("No valid date was given.")
+        return "No valid date was given."
 
     # turn datetime format into unix format and check if unix format is possible
     try:
@@ -58,9 +58,7 @@ def dateconvert(date):
         unixtime = str(unixtime).split(".")
         unixtime = unixtime[0]
         if int(unixtime) < 0 or int(unixtime) > 2147515200:
-            print("Date is not compatible with unix-time.")
-        else:
-            print(unixtime)
+            unixtime = "Date is not compatible with unix-time."
     except OverflowError:
         print("Date is not compatible with unix-time.")
 
@@ -69,13 +67,9 @@ def dateconvert(date):
     german_month = str(months_german[month - 1])
     german_date = german_weekday + ", " + str(day) + ". " + german_month + " " + str(year)
 
-    print(german_date)
-
     # british date
     british_month = months_english[month - 1]
     british_date = weekday_english + ", " + str(day) + " " + british_month + " " + str(year)
-
-    print(british_date)
 
     # american date
     if len(str(day)) == 1:
@@ -84,7 +78,8 @@ def dateconvert(date):
         month = "0" + str(month)
     american_date = weekday_english + ", " + str(day) + "/" + str(month) + "/" + str(year)
 
-    print(american_date)
+    return german_date, british_date, american_date, unixtime
+
 
 def american_format(date):
     if len(date) == 10:
@@ -93,8 +88,9 @@ def american_format(date):
     else:
         print("No valid date was given.")
 
+
 def function_format(date):
-    dateconvert(date)
+    print(dateconvert(date))
 
 
 def main():
