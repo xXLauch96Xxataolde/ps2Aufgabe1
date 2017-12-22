@@ -103,12 +103,13 @@ def function_format(date):
 
 def main():
     x = input("Please select your preferred input format: 1 for YYYYMMDD or 2 for american date (MM/DD/YYYY).")
-    date = input("Type your date in your preferred format.")
 
     if x == "2":
+        date = input("Type your date in your preferred format.")
         american_format(date)
 
     elif x == "1":
+        date = input("Type your date in your preferred format.")
         function_format(date)
 
     else:
