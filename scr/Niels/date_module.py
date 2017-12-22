@@ -102,18 +102,21 @@ def function_format(date):
 
 
 def main():
-    x = input("Please select your preferred input format: 1 for YYYYMMDD or 2 for american date (MM/DD/YYYY).")
+    while True:
+        x = input("Please select your preferred input format: 1 for YYYYMMDD or 2 for american date (MM/DD/YYYY).")
 
-    if x == "2":
-        date = input("Type your date in your preferred format.")
-        american_format(date)
+        if x == "2":
+            date = input("Type your date in your preferred format.")
+            american_format(date)
+            break
 
-    elif x == "1":
-        date = input("Type your date in your preferred format.")
-        function_format(date)
+        elif x == "1":
+            date = input("Type your date in your preferred format.")
+            function_format(date)
+            break
 
-    else:
-        print("Please enter '1' or '2'")
+        else:
+            print("Please enter '1' or '2'")
 
 
 if __name__ == '__main__':
