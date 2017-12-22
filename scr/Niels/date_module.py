@@ -1,4 +1,4 @@
-"""This program is for PS2 1.1
+"""This program is for PS2 1.2
 
 """
 
@@ -15,34 +15,54 @@ __email__ = "niels.heissel@stud.uni-frankfurt.de"
 
 
 def dateconvert(date):
-    date = str(date)
-    year = int(date[0:4])
-    month = int(date[4:6])
-    day = int(date[6:8])
+    """Date-Converter
+
+    This function takes a date as input and returns it in four different formats if
+    possible
+    """
+    try:
+        date = str(date)
+        year = int(date[0:4])
+        month = int(date[4:6])
+        day = int(date[6:8])
+    except ValueError:
+        return print("Wrong format.")
+
+    # check if years are in intervall
+    if year not in range(1800, 2201):
+        return print("Date is out of interval.")
 
     weekdays_english = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    weekdays_german = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sonnabend", "Herrentag"]
+    weekdays_german = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sonnabend", "Herrntag"]
     months_english = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
                       "November", "December"]
     months_german = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober",
                      "November", "Dezember"]
 
+    # check if date is real and assign weekday
     try:
         weekday_english = weekdays_english[dt.date(year, month, day).weekday()]
     except ValueError:
         return print("No valid date was given.")
 
+    # check if date is real and turn into datetime format
     try:
-        d = dt.datetime(year, month, day, 12, 00)
+        d = dt.datetime(year, month, day, 13, 00)  # 13 because our time-zone is plus 1
     except ValueError:
         return print("No valid date was given.")
 
-    # unix timestamp
-    unixtime = time.mktime(d.timetuple())
-    unixtime = str(unixtime).split(".")
-    unixtime = unixtime[0]
-
-    print(unixtime)
+    # turn datetime format into unix format and check if unix format is possible
+    try:
+        # unix timestamp
+        unixtime = time.mktime(d.timetuple())
+        unixtime = str(unixtime).split(".")
+        unixtime = unixtime[0]
+        if int(unixtime) < 0 or int(unixtime) > 2147515200:
+            print("Date is not compatible with unix-time.")
+        else:
+            print(unixtime)
+    except OverflowError:
+        print("Date is not compatible with unix-time.")
 
     # german date
     german_weekday = str(weekdays_german[dt.date(year, month, day).weekday()])
@@ -66,20 +86,29 @@ def dateconvert(date):
 
     print(american_date)
 
-
-def main():
-    x = input("Type 1 for american date input or 2 for normal input.")
-    date = input("Type your date in your special format.")
-
-    if x == "1":
-        if len(date) == 10:
+def american_format(date):
+    if len(date) == 10:
             date = date[6:] + date[0:2] + date[3:5]
             dateconvert(date)
-        else:
-            print("No valid date was given.")
+    else:
+        print("No valid date was given.")
 
-    elif x == "2":
-        dateconvert(date)
+def function_format(date):
+    dateconvert(date)
+
+
+def main():
+    x = input("Please select your preferred input format: 1 for YYYYMMDD or 2 for american date (MM/DD/YYYY).")
+    date = input("Type your date in your preferred format.")
+
+    if x == "2":
+        american_format(date)
+
+    elif x == "1":
+        function_format(date)
+
+    else:
+        print("Please enter '1' or '2'")
 
 
 if __name__ == '__main__':

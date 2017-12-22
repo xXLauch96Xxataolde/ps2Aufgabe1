@@ -2,6 +2,7 @@
 
 """
 
+import doctest
 import random
 import datetime as dt
 import sys
@@ -18,10 +19,23 @@ __email__ = "niels.heissel@stud.uni-frankfurt.de"
 
 
 def dateconvert(date):
-    date = str(date)
-    year = int(date[0:4])
-    month = int(date[4:6])
-    day = int(date[6:8])
+    """This procedure converts dates.
+
+    It takes a date in format YYYYMMDD and retruns it in american, british,
+    german and unix time-format.
+    """
+
+    try:
+        date = str(date)
+        year = int(date[0:4])
+        month = int(date[4:6])
+        day = int(date[6:8])
+    except ValueError:
+        return print("Wrong format.")
+
+    # check if years are in intervall
+    if year not in range(1800, 2201):
+        return print("Date is out of interval.")
 
     weekdays_english = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     weekdays_german = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sonnabend", "Herrntag"]
@@ -30,22 +44,30 @@ def dateconvert(date):
     months_german = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober",
                      "November", "Dezember"]
 
+    # check if date is real and assign weekday
     try:
         weekday_english = weekdays_english[dt.date(year, month, day).weekday()]
     except ValueError:
         return print("No valid date was given.")
 
+    # check if date is real and turn into datetime format
     try:
-        d = dt.datetime(year, month, day, 12, 00)
+        d = dt.datetime(year, month, day, 13, 00)  # 13 because our time-zone is plus 1
     except ValueError:
         return print("No valid date was given.")
 
-    # unix timestamp
-    unixtime = time.mktime(d.timetuple())
-    unixtime = str(unixtime).split(".")
-    unixtime = unixtime[0]
-
-    print(unixtime)
+    # turn datetime format into unix format and check if unix format is possible
+    try:
+        # unix timestamp
+        unixtime = time.mktime(d.timetuple())
+        unixtime = str(unixtime).split(".")
+        unixtime = unixtime[0]
+        if int(unixtime) < 0 or int(unixtime) > 2147515200:
+            print("Date is not compatible with unix-time.")
+        else:
+            print(unixtime)
+    except OverflowError:
+        print("Date is not compatible with unix-time.")
 
     # german date
     german_weekday = str(weekdays_german[dt.date(year, month, day).weekday()])
@@ -69,6 +91,9 @@ def dateconvert(date):
 
     print(american_date)
 
+    return(german_date, british_date, american_date, unixtime)
 
-dateconvert(19820807)
+
+
+dateconvert(20380119)
 
